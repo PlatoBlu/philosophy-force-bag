@@ -8,7 +8,8 @@ body {
 }
 
 header {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   background: #dcd6ce;
   padding: 15px 20px;
@@ -42,9 +43,9 @@ header h1 {
 }
 
 #content {
-  padding: 20px;
+  padding: 100px 20px 80px;
   max-width: 800px;
-  margin: 0 auto 80px;
+  margin: 0 auto;
 }
 
 .blog-post {
