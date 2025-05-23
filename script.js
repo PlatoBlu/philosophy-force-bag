@@ -51,7 +51,7 @@ const longPosts = [
     reflection. Each drag is a moment seized, each ash a thought burned away. Within this smoke,
     we find paradox: destruction and creation intertwined. As philosophers, we peer into these
     symbols, seeking insight into the nature of existence, consciousness, and our place in the world.`
-    + `\n\n` + `... (repeat or add similar content here until ~1000 words reached)`
+    + `\n\n` + `... 
   }
 ];
 
@@ -79,10 +79,13 @@ function scrollToForcePost() {
   const posts = document.querySelectorAll(".blog-post");
   for (let post of posts) {
     if (post.textContent.toLowerCase().includes("cigarette")) {
-      window.scrollTo({
-  top: post.offsetTop - 30,
-  behavior: 'smooth'
-});
+      const offset = post.offsetTop + Math.floor(Math.random() * 30 - 10); // random offset
+      setTimeout(() => {
+        window.scrollTo({
+          top: offset,
+          behavior: 'smooth'
+        });
+      }, 300); // subtle delay
       break;
     }
   }
