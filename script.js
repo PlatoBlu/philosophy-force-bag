@@ -79,7 +79,10 @@ function scrollToForcePost() {
   const posts = document.querySelectorAll(".blog-post");
   for (let post of posts) {
     if (post.textContent.toLowerCase().includes("cigarette")) {
-      post.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.scrollTo({
+  top: post.offsetTop - 30,
+  behavior: 'smooth'
+});
       break;
     }
   }
