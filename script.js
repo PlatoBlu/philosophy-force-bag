@@ -5,34 +5,35 @@ const forceParagraphs = [
   "Smoke coiled upward from the cigarette, like memories you can see but never touch."
 ];
 
-const regularPosts = [
-  {
-    title: "The Myth of Meaning",
-    text: "Life is not a puzzle with a final piece. It is a river, ever-flowing, changing shape with every thought and action.",
-    date: "April 1, 2024"
-  },
-  {
-    title: "When Stillness Speaks",
-    text: "The noise of the world often drowns out the truth. Only in stillness can we hear the echo of the self.",
-    date: "May 12, 2024"
-  },
-  {
-    title: "Walking the Line",
-    text: "Freedom does not lie in choice but in awareness. To walk the line consciously is to be truly free.",
-    date: "June 2, 2024"
-  },
-  {
-    title: "The Mirror of Perception",
-    text: "What we see in others is often our own shadow in disguise. Perception is projection, not truth.",
-    date: "July 18, 2024"
-  }
+const exampleTitles = [
+  "The Shape of Thought", "Echoes in Silence", "Fragments of Self", "The Gravity of Choice", "What We Leave Behind",
+  "Moments of Stillness", "Time and the Self", "Seeing Through Shadows", "Suffering and Meaning", "On Being"
 ];
 
-let lastScroll = 0;
-let lastTime = Date.now();
-let forced = false;
+const exampleTexts = [
+  "Reality, as we perceive it, is often a projection of inner doubts and desires.",
+  "Every truth begins as heresy in the mind of the unprepared.",
+  "Time does not heal all wounds; it merely teaches us how to carry them.",
+  "Love is not a feeling — it's a decision to witness someone's pain and not flinch.",
+  "Most people exist. Few people live with intention.",
+  "The mirror does not lie, but our reflection often tells us only what we are willing to see.",
+  "Truth is not discovered, but remembered.",
+  "Pain is the cost of a conscious life.",
+  "We fear being alone because silence introduces us to the self.",
+  "To forget is human. To forgive is evolution."
+];
 
-function randomDateBetween(start, end) {
+function getRandomTitle() {
+  return exampleTitles[Math.floor(Math.random() * exampleTitles.length)];
+}
+
+function getRandomText() {
+  return exampleTexts[Math.floor(Math.random() * exampleTexts.length)];
+}
+
+function randomDate() {
+  const start = new Date(2021, 0, 1);
+  const end = new Date(2024, 12, 31);
   const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   return date.toDateString();
 }
@@ -42,22 +43,37 @@ function getRandomImage() {
     "https://source.unsplash.com/600x300/?philosophy",
     "https://source.unsplash.com/600x300/?consciousness",
     "https://source.unsplash.com/600x300/?books",
-    "https://source.unsplash.com/600x300/?smoke"
+    "https://source.unsplash.com/600x300/?abstract",
+    "https://source.unsplash.com/600x300/?light",
+    "https://source.unsplash.com/600x300/?shadow",
+    "https://source.unsplash.com/600x300/?writing"
   ];
   return pics[Math.floor(Math.random() * pics.length)];
 }
 
-function getAllPosts() {
-  let posts = [...regularPosts];
+// Generate many regular posts
+function generateBlogPosts(count = 50) {
+  const posts = [];
+  for (let i = 0; i < count; i++) {
+    posts.push({
+      title: getRandomTitle(),
+      text: getRandomText(),
+      date: randomDate()
+    });
+  }
+  return posts;
+}
+
+function insertForcePost(posts) {
   const forceText = forceParagraphs[Math.floor(Math.random() * forceParagraphs.length)];
   const forcePost = {
     title: "On Smoke and Stillness",
     text: forceText,
-    date: randomDateBetween(new Date(2023, 0, 1), new Date(2024, 12, 31))
+    date: randomDate()
   };
   const insertAt = Math.floor(Math.random() * posts.length);
   posts.splice(insertAt, 0, forcePost);
-  return posts.concat(posts); // Duplicate for long scroll
+  return posts;
 }
 
 function renderBlog(posts) {
@@ -72,6 +88,7 @@ function renderBlog(posts) {
   `).join('');
 }
 
+// Scroll logic
 function scrollToForcePost() {
   const posts = document.querySelectorAll(".blog-post");
   for (let p of posts) {
@@ -83,24 +100,26 @@ function scrollToForcePost() {
   }
 }
 
-// Scroll trigger logic
+let lastScroll = 0;
+let lastTime = Date.now();
+let forced = false;
+
 window.addEventListener('scroll', () => {
   const currentScroll = window.scrollY;
   const currentTime = Date.now();
   const speed = Math.abs(currentScroll - lastScroll) / (currentTime - lastTime);
-
   if (speed > 1.5 && !forced) {
     scrollToForcePost();
     forced = true;
   }
-
   lastScroll = currentScroll;
   lastTime = currentTime;
 });
 
-// Loading screen logic
+// Loading screen
 window.onload = () => {
-  const posts = getAllPosts();
+  let posts = generateBlogPosts(60);
+  posts = insertForcePost(posts);
   renderBlog(posts);
   document.getElementById("loader").style.display = "none";
   document.getElementById("content").classList.remove("hidden");
