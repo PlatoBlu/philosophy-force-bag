@@ -51,7 +51,7 @@ const longPosts = [
     reflection. Each drag is a moment seized, each ash a thought burned away. Within this smoke,
     we find paradox: destruction and creation intertwined. As philosophers, we peer into these
     symbols, seeking insight into the nature of existence, consciousness, and our place in the world.`
-    + `\n\n` + `... 
+    + `\n\n` + `... (repeat or add similar content here until ~1000 words reached)`
   }
 ];
 
